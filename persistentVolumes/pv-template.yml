@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: pv-creation
+  annotations:
+    description: "Creates PVs"
+objects:
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name:
+  spec:
+    accessModes:
+    - ${ACCESS_MODE}
+    capacity:
+      storage: ${STORAGE}
+    claimRef:
+    nfs:
+      path: ${NFS_PATH}
+      server: ${NFS_HOST}
+    persistentVolumeReclaimPolicy: ${RECLAIM_POLICY}
+parameters:
+- description: NFS Host
+  required: true
+  name: NFS_HOST
+- description: NFS Path
+  required: true
+  name: NFS_PATH
+- description: NFS Path
+  required: true
+  name: NFS_PATH
+- description: Reclaim Policy
+  required: true
+  name: RECLAIM_POLICY
+- description: Storage
+  required: true
+  name: STORAGE
+- description: Access Mode
+  required: true
+  name: ACCESS_MODE
