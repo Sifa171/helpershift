@@ -1,2 +1,2 @@
-# helpershift
-This is a growing repository of scripts which can be helpful after an OpenShift installation
+# HelperShift
+This is a growing repository of scripts which can be helpful after an OpenShift installation from an administrational perspective
