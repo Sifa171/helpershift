@@ -26,9 +26,6 @@ parameters:
 - description: NFS Path
   required: true
   name: NFS_PATH
-- description: NFS Path
-  required: true
-  name: NFS_PATH
 - description: Reclaim Policy
   required: true
   name: RECLAIM_POLICY
