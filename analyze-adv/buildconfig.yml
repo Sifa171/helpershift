@@ -17,8 +17,6 @@ spec:
     contextDir: analyze-adv/docker
     git:
       uri: 'https://github.com/Sifa91/helpershift.git'
-    sourceSecret:
-      name: gitsecret
     type: Git
   strategy:
     dockerStrategy: {}
