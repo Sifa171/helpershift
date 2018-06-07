@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: analyze-adv
+  name: analyze-adv
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'analyze-adv:latest'
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: analyze-adv/docker
+    git:
+      uri: 'https://github.com/Sifa91/helpershift.git'
+    type: Git
+  strategy:
+    dockerStrategy: {}
+    type: Docker
+  triggers: []

@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: analyze-adv
+    run: analyze-adv
+  name: analyze-adv
+spec:
+  replicas: 1
+  selector:
+    run: analyze-adv
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: analyze-adv
+        run: analyze-adv
+      name: analyze-adv
+    spec:
+      containers:
+        - command:
+            - /sbin/startup.sh
+          image: 'your-docker-registry:5000/ct-dev/analyze-adv:latest'
+          imagePullPolicy: Always
+          name: analyze-adv
+  triggers:
+    - type: ConfigChange
+    - type: imageChange
