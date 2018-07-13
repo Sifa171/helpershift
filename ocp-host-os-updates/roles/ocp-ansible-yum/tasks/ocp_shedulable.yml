@@ -1,0 +1,4 @@
+- name: make actual node unshedulable
+  command: oc adm manage-node {{ ansible_fqdn }} --schedulable=true
+  delegate_to: "{{ groups.masters | first }}"
+

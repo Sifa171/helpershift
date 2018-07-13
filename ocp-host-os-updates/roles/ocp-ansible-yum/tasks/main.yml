@@ -1,0 +1,8 @@
+---
+# tasks file for ocp-ansible-yum
+#
+- include_tasks: ocp_unshedulable.yml
+- include_tasks: ocp_evacuate.yml
+- include_tasks: yum_update.yml
+- include_tasks: systemd.yml
+- include_tasks: ocp_shedulable.yml

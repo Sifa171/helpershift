@@ -1,0 +1,5 @@
+- name: update all yum packages on all nodes in ref and prod
+  hosts: all
+  serial: 1
+  roles:
+    - ocp-ansible-yum 

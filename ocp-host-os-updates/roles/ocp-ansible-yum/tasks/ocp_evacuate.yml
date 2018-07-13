@@ -1,0 +1,4 @@
+- name:
+  command: oc adm manage-node {{ ansible_fqdn }} --evacuate --force
+  delegate_to: "{{ groups.masters | first }}"
+

@@ -1,0 +1,5 @@
+- name: force all nodes to exclude relevant ocp packages from being updated
+  command: "/usr/sbin/atomic-openshift-excluder exclude"
+
+- name: force all nodes to exclude relevant docker packages from being updated
+  command: "/usr/sbin/atomic-openshift-docker-excluder exclude"

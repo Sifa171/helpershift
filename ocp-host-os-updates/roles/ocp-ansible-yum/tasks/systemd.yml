@@ -1,0 +1,17 @@
+---
+- name: restart server after yum update 
+  shell: sleep 10 && /sbin/shutdown -r now
+  async: 300
+  poll: 0
+  become: true
+  ignore_errors: true
+
+- name: waiting for host to come back
+  local_action: wait_for
+  args:
+    host: "{{ inventory_hostname }}"
+    port: 22
+    delay: 30
+    timeout: 300
+    state: started
+...

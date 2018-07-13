@@ -1,0 +1,7 @@
+---
+- name: update packages on rhel  server systems
+  yum:
+    name: "*"
+    state: latest
+    exclude: kernel*,libsmbios
+
