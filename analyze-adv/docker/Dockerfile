@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/rhel:7.4
 
 ENV LANG=en_US.UTF-8 \
-    INSTALL_PKGS="nmap net-tools telnet traceroute openssl tar rsync curl wget" \
+    INSTALL_PKGS="nmap net-tools telnet traceroute openssl tar rsync curl wget nslookup dig tcpdump ip" \
     USER=nonroot \
     USERHOME=/home/${USER}
     
