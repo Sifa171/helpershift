@@ -1,15 +1,16 @@
 FROM registry.access.redhat.com/rhel:7.4
 
 ENV LANG=en_US.UTF-8 \
-    INSTALL_PKGS="nmap net-tools telnet traceroute openssl tar rsync curl wget nslookup dig tcpdump ip" \
+    INSTALL_PKGS="nmap net-tools telnet traceroute openssl tar rsync curl wget tcpdump" \
     USER=nonroot \
     USERHOME=/home/${USER}
     
 #RUN localedef -i en_US -f UTF-8 en_US.UTF-8
 
 # You could remove the yum update, if you dont want to update other packages
-RUN yum update -y --setopt=tsflags=nodocs \
-    && yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS \
+#RUN 
+#yum update -y --setopt=tsflags=nodocs \
+RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS \
     && rpm -V $INSTALL_PKGS \
     && yum clean all \
     && rm -rf /var/cache/yum
