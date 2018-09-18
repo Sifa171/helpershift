@@ -1,0 +1,10 @@
+---
+  - name: Create output directories
+    file:
+      path: "{{ output_path }}"
+      state: directory
+
+  - name: Create dockerfile
+    template:
+      src: Dockerfile.j2
+      dest: "{{ output_path }}/Dockerfile"

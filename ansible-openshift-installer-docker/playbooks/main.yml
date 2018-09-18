@@ -1,0 +1,12 @@
+- hosts: localhost
+  gather_facts: False
+  roles:
+     - role: createDockerfile
+     - role: copyFiles
+  vars:
+        OCP_VERSION: "{{ ocp_version }}"
+        MAINTAINER: "{{ maintainer }}"
+        MAINTAINER_EMAIL: "{{ maintainer_email }}"
+        ANSIBLE_USER: "{{ ansible_user }}"
+        INSTALL_PKGS: "{{ install_pkgs }}"
+        

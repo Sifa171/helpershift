@@ -1,0 +1,10 @@
+[all:vars]
+ocp_version=v3.10
+output_path=/Users/sdehn/tmp
+maintainer=Sebastian Dehn
+maintainer_email=sdehn@redhat.com
+ansible_user=z-scm
+install_pkgs=git
+
+[local]
+localhost ansible_connection=local
