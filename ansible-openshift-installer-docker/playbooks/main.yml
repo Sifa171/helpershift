@@ -2,7 +2,7 @@
   gather_facts: False
   roles:
      - role: createDockerfile
-     - role: copyFiles
+     - role: createStartupScript
   vars:
         OCP_VERSION: "{{ ocp_version }}"
         MAINTAINER: "{{ maintainer }}"

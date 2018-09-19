@@ -1,5 +1,5 @@
 ---
-  - name: Copy startup.sh
+  - name: Create startup.sh
     template:
       src: "startup.j2"
       dest: "{{ output_path }}/startup.sh"
