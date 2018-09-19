@@ -1,0 +1,8 @@
+#!/bin/bash 
+{% if USE_CUSTOM_STUFF == 'true' %}
+git clone {{ GIT_REPO_URL }}
+{% if GIT_REPO_BRANCH %}  
+git checkout {{ GIT_REPO_BRANCH }}
+{% endif %}
+{% endif %}
+/bin/bash

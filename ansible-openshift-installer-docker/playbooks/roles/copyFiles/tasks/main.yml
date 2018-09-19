@@ -1,6 +1,6 @@
 ---
   - name: Copy startup.sh
-    copy:
-      src: "{{ role_path }}/files/startup.sh"
-      dest: "{{ output_path }}"
+    template:
+      src: "startup.j2"
+      dest: "{{ output_path }}/startup.sh"
 

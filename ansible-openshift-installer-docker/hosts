@@ -6,5 +6,11 @@ maintainer_email=sdehn@redhat.com
 ansible_user=z-scm
 install_pkgs=git
 
+# if you want to use customized stuff from your GIT repo, than fill out the following variables - otherwise set 'use_custom_stuff' to 'false'
+use_custom_stuff=true
+git_repo_url=bla
+# just required if you want to checkout a specific branch
+git_repo_branch=
+
 [local]
 localhost ansible_connection=local
