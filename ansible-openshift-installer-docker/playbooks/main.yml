@@ -3,6 +3,7 @@
   roles:
      - role: createDockerfile
      - role: createStartupScript
+     - role: createDirectories
   vars:
         OCP_VERSION: "{{ ocp_version }}"
         MAINTAINER: "{{ maintainer }}"
@@ -12,4 +13,5 @@
         USE_CUSTOM_STUFF: "{{ use_custom_stuff }}"
         GIT_REPO_URL: "{{ git_repo_url }}"
         GIT_REPO_BRANCH: "{{ git_repo_branch }}"
-        
+        USE_CUSTOM_REPOS: "{{ use_custom_repos }}"
+        USE_CUSTOM_CERTS: {{ use_custom_certs }}

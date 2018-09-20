@@ -12,19 +12,23 @@ ENV USER={{ ANSIBLE_USER }}
 
 USER root
 
+{% if USE_CUSTOM_REPOS == 'true' %} 
 ADD  /files/repos /etc/yum.repos.d/
+{% endif %}
 
-RUN update-ca-trust enable
-RUN update-ca-trust force-enable
+{% if USE_CUSTOM_CERTS == 'true' %} 
+RUN update-ca-trust enable \
+    && update-ca-trust force-enable
 
 ADD /files/certs /etc/pki/tls/certs/
 RUN update-ca-trust extract
+{% endif %}
 
-
+{% if INSTALL_PKGS %} 
 RUN yum clean cache all \
     && yum install -y {{ INSTALL_PKGS }} \
     && yum clean all
-
+{% endif %}
 ADD startup.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/startup.sh

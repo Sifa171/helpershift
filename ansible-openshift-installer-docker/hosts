@@ -1,16 +1,23 @@
 [all:vars]
 ocp_version=v3.10
+# the path where all your files will be created 
 output_path=/Users/sdehn/tmp
 maintainer=Sebastian Dehn
 maintainer_email=sdehn@redhat.com
-ansible_user=z-scm
+ansible_user=sifa
 install_pkgs=git
 
 # if you want to use customized stuff from your GIT repo, than fill out the following variables - otherwise set 'use_custom_stuff' to 'false'
 use_custom_stuff=true
 git_repo_url=bla
 # just required if you want to checkout a specific branch
-git_repo_branch=
+git_repo_branch=test
+
+# if you want to use custom repos set 'true'
+use_custom_repos=true
+
+# if you want to use custom certs set 'true'
+use_custom_certs=true
 
 [local]
 localhost ansible_connection=local

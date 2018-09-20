@@ -1,0 +1,22 @@
+---
+  - name: Create directories for files
+    file:
+      path: "{{ output_path }}/files"
+      state: directory
+
+  - name: Create subfolder repos
+    file:
+      path: "{{ output_path }}/files/repos"
+      state: directory
+    when: use_custom_repos
+
+  - name: Create subfolder certs
+    file:
+      path: "{{ output_path }}/files/certs"
+      state: directory
+    when: use_custom_certs
+
+  - name: Create subfolder ssh
+    file:
+      path: "{{ output_path }}/files/ssh"
+      state: directory
