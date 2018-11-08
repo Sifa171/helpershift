@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: roles
+objects:
+- apiVersion: v1
+  kind: Role
+  metadata:
+    creationTimestamp: null
+    name: prometheus-k8s
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - endpoints
+    - nodes
+    - pods
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: v1
+  kind: Role
+  metadata:
+    creationTimestamp: null
+    name: prometheus-k8s-config
+  rules:
+  - apiGroups:
+    - ""
+    attributeRestrictions: null
+    resources:
+    - configmaps
+    verbs:
+    - get

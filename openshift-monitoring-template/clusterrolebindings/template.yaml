@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: clusterrolebindings
+objects:
+- apiVersion: v1
+  groupNames: null
+  kind: ClusterRoleBinding
+  metadata:
+    creationTimestamp: null
+    name: alertmanager-main
+  roleRef:
+    name: alertmanager-main
+  subjects:
+  - kind: ServiceAccount
+    name: alertmanager-main
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:alertmanager-main
+- apiVersion: v1
+  groupNames: null
+  kind: ClusterRoleBinding
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRoleBinding","metadata":{"annotations":{},"name":"cluster-monitoring-operator","namespace":""},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"ClusterRole","name":"cluster-monitoring-operator"},"subjects":[{"kind":"ServiceAccount","name":"cluster-monitoring-operator","namespace":"openshift-monitoring"}]}
+    creationTimestamp: null
+    name: cluster-monitoring-operator
+  roleRef:
+    name: cluster-monitoring-operator
+  subjects:
+  - kind: ServiceAccount
+    name: cluster-monitoring-operator
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:cluster-monitoring-operator
+- apiVersion: v1
+  groupNames: null
+  kind: ClusterRoleBinding
+  metadata:
+    creationTimestamp: null
+    name: grafana
+  roleRef:
+    name: grafana
+  subjects:
+  - kind: ServiceAccount
+    name: grafana
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:grafana
+- apiVersion: v1
+  groupNames: null
+  kind: ClusterRoleBinding
+  metadata:
+    creationTimestamp: null
+    name: kube-state-metrics
+  roleRef:
+    name: kube-state-metrics
+  subjects:
+  - kind: ServiceAccount
+    name: kube-state-metrics
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:kube-state-metrics
+- apiVersion: v1
+  groupNames: null
+  kind: ClusterRoleBinding
+  metadata:
+    creationTimestamp: null
+    name: node-exporter
+  roleRef:
+    name: node-exporter
+  subjects:
+  - kind: ServiceAccount
+    name: node-exporter
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:node-exporter
+- apiVersion: v1
+  groupNames: null
+  kind: ClusterRoleBinding
+  metadata:
+    creationTimestamp: null
+    name: prometheus-k8s
+  roleRef:
+    name: prometheus-k8s
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-k8s
+- apiVersion: v1
+  groupNames: null
+  kind: ClusterRoleBinding
+  metadata:
+    creationTimestamp: null
+    name: prometheus-operator
+  roleRef:
+    name: prometheus-operator
+  subjects:
+  - kind: ServiceAccount
+    name: prometheus-operator
+    namespace: openshift-monitoring
+  userNames:
+  - system:serviceaccount:openshift-monitoring:prometheus-operator
