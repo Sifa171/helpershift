@@ -7,8 +7,8 @@ metadata:
   name: grafana-template
   annotations:
     description: "A template deploy your own Grafana connected to the cluster Prometheus"
-    iconClass: 
-    openshift.io/display-name: "Grafana instance"
+    iconClass: fa-tachometer
+    openshift.io/display-name: "Grafana"
     openshift.io/provider-display-name: "Sebastian Dehn - sdehn@redhat.com"
     tags: 
     template.openshift.io/documentation-url: ""
@@ -80,7 +80,7 @@ objects:
           - -http-address=
           - -email-domain=*
           - -upstream=http://localhost:3001
-          - '-openshift-sar={"namespace":"my-monitoring", "resource": "services", "verb": "get"}'
+          - '-openshift-sar={"namespace":"$(MY_POD_NAMESPACE)", "resource": "services", "verb": "get"}'
           - -tls-cert=/etc/tls/private/tls.crt
           - -tls-key=/etc/tls/private/tls.key
           - -client-secret-file=/var/run/secrets/kubernetes.io/serviceaccount/token
@@ -88,7 +88,12 @@ objects:
           - -openshift-service-account=grafana
           - -openshift-ca=/etc/pki/tls/cert.pem
           - -openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-          - -skip-auth-regex=^/metrics
+          - -skip-auth-regex=^/metrics'
+          env:
+            - name: MY_POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
           image: registry.redhat.io/openshift3/oauth-proxy:v3.11
           imagePullPolicy: IfNotPresent
           name: grafana-proxy
