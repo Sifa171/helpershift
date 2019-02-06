@@ -208,8 +208,28 @@ objects:
     labels:
       template: grafana
 - apiVersion: v1
-  data:
-    prometheus.yaml: eyAgICAiYXBpVmVyc2lvbiI6IDEsICAgICJkYXRhc291cmNlcyI6IFsgICAgICAgIHsgICAgICAgICAgICAiYWNjZXNzIjogInByb3h5IiwgICAgICAgICAgICAiYmFzaWNBdXRoIjogdHJ1ZSwgICAgICAgICAgICAiYmFzaWNBdXRoUGFzc3dvcmQiOiAiN0tSVGVPWnYycVlleUwzckdNZ3ovY2tkV0tRSTV1U3p0bjJSMXNkNXlrc05kQUNGeTc4dG13bmZSK2R2dnBPQ3VobTdya3pOdzBZSXZNdXZjTERqVGQwT2ZodVlJRlBsMVYzMTJrZEtRRVAvTFlITVJkdTNuL0lBMlhMZjg0MVlncXJCcFJDeUJOZXkwRkdleWZibk9pTFBSNU16SDJGdUZna21BWnNJa0hrZnNmUys0Ujl6MHcwNlJabzFBM1Z2MXhGbXNoWmo3clRIVUdwSHRzVkVKWHNwR0RyOS9mdk0yWGZVREQ3cWpkYTYrb202K29ZcjJvZFpZOTVPVUcrREJmOGZzRmpyVlZMTlpXcTJyT2RMbnJpbG1ndy9nYWpWWFM0dW56V1IrT3hEd2dyZ3hGVHEwUVBKWHBubnQzeGlXa0s3eDRZUm1ncERBOEdWMXhTdSIsICAgICAgICAgICAgImJhc2ljQXV0aFVzZXIiOiAiaW50ZXJuYWwiLCAgICAgICAgICAgICJlZGl0YWJsZSI6IGZhbHNlLCAgICAgICAgICAgICJqc29uRGF0YSI6IHsgICAgICAgICAgICAgICAgInRsc1NraXBWZXJpZnkiOiB0cnVlICAgICAgICAgICAgfSwgICAgICAgICAgICAibmFtZSI6ICJwcm9tZXRoZXVzIiwgICAgICAgICAgICAib3JnSWQiOiAxLCAgICAgICAgICAgICJ0eXBlIjogInByb21ldGhldXMiLCAgICAgICAgICAgICJ1cmwiOiAiaHR0cHM6Ly9wcm9tZXRoZXVzLWs4cy5vcGVuc2hpZnQtbW9uaXRvcmluZy5zdmM6OTA5MSIsICAgICAgICAgICAgInZlcnNpb24iOiAxICAgICAgICB9ICAgIF19Cg==
+  stringData:
+    prometheus.yaml: |- 
+     {  
+        "apiVersion":1,
+        "datasources":[  
+            {  
+                "access":"proxy",
+                "basicAuth":true,
+                "basicAuthPassword":"",
+                "basicAuthUser":"internal",
+                "editable":false,
+                "jsonData":{  
+                    "tlsSkipVerify":true
+                },
+                "name":"prometheus",
+                "orgId":1,
+                "type":"prometheus",
+                "url":"https://prometheus-k8s.openshift-monitoring.svc:9091",
+                "version":1
+            }
+       ]
+     }
   kind: Secret
   metadata:
     name: grafana-datasources
@@ -217,8 +237,27 @@ objects:
       template: grafana
   type: Opaque
 - apiVersion: v1
-  data:
-    grafana.ini: W3NlY3VyaXR5XQphZG1pbl91c2VyID0gJHtHUkFGQU5BX0FETUlOX1VTRVJ9ClthdXRoXQpkaXNhYmxlX2xvZ2luX2Zvcm0gPSB0cnVlCmRpc2FibGVfc2lnbm91dF9tZW51ID0gdHJ1ZQpbYXV0aC5iYXNpY10KZW5hYmxlZCA9IGZhbHNlClthdXRoLnByb3h5XQphdXRvX3NpZ25fdXAgPSB0cnVlCmVuYWJsZWQgPSB0cnVlCmhlYWRlcl9uYW1lID0gWC1Gb3J3YXJkZWQtVXNlcgpbcGF0aHNdCmRhdGEgPSAvdmFyL2xpYi9ncmFmYW5hCmxvZ3MgPSAvdmFyL2xpYi9ncmFmYW5hL2xvZ3MKcGx1Z2lucyA9IC92YXIvbGliL2dyYWZhbmEvcGx1Z2lucwpwcm92aXNpb25pbmcgPSAvZXRjL2dyYWZhbmEvcHJvdmlzaW9uaW5nCltzZXJ2ZXJdCmh0dHBfYWRkciA9IDEyNy4wLjAuMQpodHRwX3BvcnQgPSAzMDAxCg==
+  stringData:
+    grafana.ini: |-
+      [security]
+      admin_user = ${GRAFANA_ADMIN_USER}
+      [auth]
+      disable_login_form = true
+      disable_signout_menu = true
+      [auth.basic]
+      enabled = false
+      [auth.proxy]
+      auto_sign_up = true
+      enabled = true
+      header_name = X-Forwarded-User
+      [paths]
+      data = /var/lib/grafana
+      logs = /var/lib/grafana/logs
+      plugins = /var/lib/grafana/plugins
+      provisioning = /etc/grafana/provisioning
+      [server]
+      http_addr = 127.0.0.1
+      http_port = 3001
   kind: Secret
   metadata:
     name: grafana-config
