@@ -1,7 +1,7 @@
 # Grafana with OpenShift OAuth Proxy
 
 ## NOTE
-You have to be cluster-admin to use install the Grafana template
+You have to be cluster-admin to install the Grafana template.
 
 ## Usage
 
