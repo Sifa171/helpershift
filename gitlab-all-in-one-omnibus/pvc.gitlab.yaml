@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: gitlab
+    name: gitlab-config
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: gitlab
+    name: gitlab-data
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Gi
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: gitlab
+    name: gitlab-logs
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi

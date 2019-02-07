@@ -1,0 +1,15 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: gitlab-http
+  labels:
+    app: gitlab
+spec:
+  host: gitlab.example.com
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: gitlab
