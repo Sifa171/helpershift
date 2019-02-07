@@ -58,7 +58,7 @@ Gitlab also comes with his own prometheus. I suggest to disable the kubernetes f
 prometheus['monitor_kubernetes'] = false;
 ```
 Otherwise prometheus complains constantly that it can't read a list of nodes - and there is no way that this "container" gets cluster wide rights :D
-If you ever switch to a propper installation of Gitlab you should think about integrating this into your Prometheus which already monitors your OpenShift.
+If you ever switch to a propper installation of Gitlab you should think about integrating this into your Prometheus which already monitors your OpenShift. The file dc.gitlab-omnibus-prometheus.yaml shows the annotations you need to let OpenShift collect the metrics from Gitlab. You need to get the metrics token from Gitlab once its running here: https://gitlab.example.com/admin/health_check
 
 If you want to use an edge terminating https route in OpenShift you need to specify an external_url with https and configure nginx to listen without https.
 ```
