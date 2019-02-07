@@ -59,6 +59,7 @@ prometheus['monitor_kubernetes'] = false;
 ```
 Otherwise prometheus complains constantly that it can't read a list of nodes - and there is no way that this "container" gets cluster wide rights :D
 If you ever switch to a propper installation of Gitlab you should think about integrating this into your Prometheus which already monitors your OpenShift. You can collect prometheus metrics from gitlanb. You need to get the metrics token from Gitlab once its running here: https://gitlab.example.com/admin/health_check
+If you don't want to use the token (its deprecated) you can configure the ip whitelist. See: https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/administration/monitoring/ip_whitelist.md
 
 ```
 apiVersion: v1
