@@ -32,6 +32,22 @@ oc process -f gitlab-runner.yaml \
     -p GITLAB_RUNNER_NAMESPACE=gitlab-runner | oc create -f -
 ```
 **INFO:** You need to run gitlab-runner register inside the runner to get the token. Not sure why, but it is very impractical. My first setup was with a wrong token to get the container running and run gitlab-runner register to get a token. After that i put the token inside the config.
+You can manage all runners here https://gitlab.example.com/admin/runners/
 
 If you want your minio cache to persist you should swap the empty dir for a PersistentVolumeClaim. If you are in a cloud platform with a S3 compatible storage you can use that one instead. 
 If your minio cache restart frequently you should check the resource limtis, liveness probe and readiness probe. I had to change the probe from /minio/login to /minio/health/live to get it working
+
+## Advanced
+This section describes ways for more advanced builds
+### kaniko
+You can build images inside the gitlab runner with kaniko. 
+See: https://docs.gitlab.com/ee/ci/docker/using_kaniko.html
+This example creates another Gitlab Runner for kaniko. It would be possible to use kaniko inside the simple Runenr we just created, but it is much nicer to create a special kaniko runner which is already configured with credentials for the image registry to push images.
+The ConfigMap ```cm.docker-config.yaml``` is an example with credentials for two registries. This should contain the credentials for registries you want pull images from or push images to. You can use docker login on your machine to create such a config. After the login it is normally stored in ~/.docker/config.json
+```
+oc create -f cm.docker-config.yaml
+```
+
+TODO: template for gitlab kaniko runner!!
+
+More information on kubernetes runner configuration: https://docs.gitlab.com/runner/executors/kubernetes.html and https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runners-kubernetes-section
