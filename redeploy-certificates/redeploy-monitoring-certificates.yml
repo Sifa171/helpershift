@@ -1,0 +1,109 @@
+---
+- import_playbook: ../../init/main.yml
+- name: Update monitoring certificates
+  hosts: oo_first_master
+  vars:
+  roles:
+  - lib_openshift
+  - openshift_facts
+  tasks:
+  - name: Remove certificates secret
+    with_items:
+    - alertmanager-main-tls
+    - grafana-tls
+    - kube-state-metrics-tls
+    - node-exporter-tls
+    - prometheus-k8s-tls
+    oc_obj:
+      name: "{{ item }}" 
+      kind: secret
+      state: absent
+      namespace: openshift-monitoring
+
+  - name: Remove monitoring pods
+    with_items:
+    - app=prometheus
+    - app=kube-state-metrics
+    - app=node-exporter
+    - app=grafana
+    - app=alertmanager-main
+    oc_obj:
+      selector: "{{ item }}"
+      kind: pod
+      state: absent
+      namespace: openshift-monitoring
+
+  - name: Verify that the grafana pods are running
+    oc_obj:
+      namespace: openshift-monitoring
+      kind: deployment
+      state: list
+      name: grafana
+    register: grafana_deployment
+    until:
+    - grafana_deployment.results.results[0].status.readyReplicas is defined
+    - grafana_deployment.results.results[0].status.readyReplicas > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  - name: Verify that the kube-state-metrics pods are running
+    oc_obj:
+      namespace: openshift-monitoring
+      kind: deployment
+      state: list
+      name: kube-state-metrics
+    register: kube_state_metrics_deployment
+    until:
+    - kube_state_metrics_deployment.results.results[0].status.readyReplicas is defined
+    - kube_state_metrics_deployment.results.results[0].status.readyReplicas > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  - name: Verify that the node-exporter pods are running
+    oc_obj:
+      namespace: openshift-monitoring
+      kind: daemonset
+      state: list
+      name: node-exporter
+    register: node_exporter_daemonset
+    until:
+    - node_exporter_daemonset.results.results[0].status.numberReady is defined
+    - node_exporter_daemonset.results.results[0].status.numberReady > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  - name: Verify that the alertmanager-main pods are running
+    oc_obj:
+      namespace: openshift-monitoring
+      kind: statefulset
+      state: list
+      name: alertmanager-main
+    register: alertmanager_main_statefulset
+    until:
+    - alertmanager_main_statefulset.results.results[0].status.readyReplicas is defined
+    - alertmanager_main_statefulset.results.results[0].status.readyReplicas > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  - name: Verify that the prometheus-k8s pods are running
+    oc_obj:
+      namespace: openshift-monitoring
+      kind: statefulset
+      state: list
+      name: prometheus-k8s
+    register: prometheus_k8s_statefulset
+    until:
+    - prometheus_k8s_statefulset.results.results[0].status.readyReplicas is defined
+    - prometheus_k8s_statefulset.results.results[0].status.readyReplicas > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  #- name: debug node_exporter_daemonset
+   # debug: 
+    #  var: node_exporter_daemonset
+     # verbosity: 1
