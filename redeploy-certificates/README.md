@@ -17,3 +17,11 @@ It uses for certificate regenerartion the original config.yaml playbook for logg
 
 Just copy the playbook to /usr/share/ansible/openshift-ansible/playbooks/openshift-logging/private/ and run it.
 
+## Redeploy metrics certificates
+
+This is a playbook which deletes all tls-secrets and related pods in the openshift-infra namespace after running the redeploy-certificates.yml playbook for OpenShift to redeploy a new CA or retrofit certificates.
+It uses for certificate regenerartion the original config.yaml playbook for metrics.
+
+### Usage
+
+Just copy the playbook to /usr/share/ansible/openshift-ansible/playbooks/openshift-metrics/private/ and run it.

@@ -1,0 +1,105 @@
+---
+- name: Metrics redeploy certificates Checkpoint Start
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Set Metrics redeploy certificates 'In Progress'
+    run_once: true
+    set_stats:
+      data:
+        redeploy_metrics_certificates_data:
+          title: "Metrics redeploy certificates"
+          playbook: "playbooks/openshift-metrics/private/redeploy-metrics-certificates.yml"
+          status: "In Progress"
+          start: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
+
+- import_playbook: ../../init/main.yml
+  vars:
+    l_init_fact_hosts: "oo_masters_to_config"
+    l_openshift_version_set_hosts: "oo_masters_to_config:!oo_first_master"
+    l_sanity_check_hosts: "{{ groups['oo_masters_to_config'] }}"
+
+- name: Update metrics certificates
+  hosts: oo_first_master
+  vars:
+  roles:
+  - lib_openshift
+  - openshift_facts
+  tasks:
+  - name: Remove certificates secret
+    with_items:
+    - hawkular-cassandra-certs
+    - hawkular-metrics-certs
+    - heapster-certs
+    oc_obj:
+      name: "{{ item }}" 
+      kind: secret
+      state: absent
+      namespace: openshift-infra
+- import_playbook: ./config.yml
+
+
+- name: Verifying all metrics pods are running
+  hosts: oo_first_master
+  vars:
+  roles:
+  - lib_openshift
+  - openshift_facts
+  tasks:
+  - name: Verify that the cassandra pod is running
+    oc_obj:
+      namespace: openshift-infra
+      kind: replicationcontroller
+      state: list
+      name: hawkular-cassandra-1
+    register: hawkular_cassandra_replicationcontroller
+    until:
+    - hawkular_cassandra_replicationcontroller.results.results[0].status.readyReplicas is defined
+    - hawkular_cassandra_replicationcontroller.results.results[0].status.readyReplicas > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  - name: Verify that the hawkular pods are running
+    oc_obj:
+      namespace: openshift-infra
+      kind: replicationcontroller
+      state: list
+      name: hawkular-metrics
+    register: hawkular_metrics_replicationcontroller
+    until:
+    - hawkular_metrics_replicationcontroller.results.results[0].status.readyReplicas is defined
+    - hawkular_metrics_replicationcontroller.results.results[0].status.readyReplicas > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  - name: Verify that the heapster pods are running
+    oc_obj:
+      namespace: openshift-infra
+      kind: replicationcontroller
+      state: list
+      name: heapster
+    register: heapster_replicationcontroller
+    until:
+    - heapster_replicationcontroller.results.results[0].status.readyReplicas is defined
+    - heapster_replicationcontroller.results.results[0].status.readyReplicas > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  #- name: debug node_exporter_daemonset
+   # debug: 
+    #  var: node_exporter_daemonset
+     # verbosity: 1
+- name: Metrics redeploy certificates Checkpoint End
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Set Metrics redeploy certificates 'Complete'
+    run_once: true
+    set_stats:
+      data:
+        redeploy_metrics_certificates_data:
+          status: "Complete"
+          end: "{{ lookup('pipe', 'date +%Y%m%d%H%M%SZ') }}"
