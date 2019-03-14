@@ -1,0 +1,79 @@
+---
+- import_playbook: ../../init/main.yml
+  vars:
+    l_init_fact_hosts: "oo_masters_to_config"
+    l_openshift_version_set_hosts: "oo_masters_to_config:!oo_first_master"
+    l_sanity_check_hosts: "{{ groups['oo_masters_to_config'] }}"
+
+- name: Update logging certificates
+  hosts: oo_first_master
+  vars:
+  roles:
+  - lib_openshift
+  - openshift_facts
+  tasks:
+  - name: Remove certificates secret
+    with_items:
+    - prometheus-tls
+    - logging-kibana-proxy
+    - logging-kibana
+    - logging-fluentd
+    - logging-elasticsearch
+    - logging-curator
+    oc_obj:
+      name: "{{ item }}" 
+      kind: secret
+      state: absent
+      namespace: openshift-logging
+- import_playbook: ./config.yml
+
+
+- name: Update restart logging pods
+  hosts: oo_first_master
+  vars:
+  roles:
+  - lib_openshift
+  - openshift_facts
+  tasks:
+  - name: Remove logging pods except ElasticSearch
+    with_items:
+    - component=fluentd
+    - component=kibana
+    oc_obj:
+      selector: "{{ item }}"
+      kind: pod
+      state: absent
+      namespace: openshift-logging
+
+  - name: Verify that the kibana pod is running
+    oc_obj:
+      namespace: openshift-logging
+      kind: deploymentconfig
+      state: list
+      name: logging-kibana
+    register: logging_kibana_deploymentconfig
+    until:
+    - logging_kibana_deploymentconfig.results.results[0].status.readyReplicas is defined
+    - logging_kibana_deploymentconfig.results.results[0].status.readyReplicas > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  - name: Verify that the fluentd pods are running
+    oc_obj:
+      namespace: openshift-logging
+      kind: daemonset
+      state: list
+      name: logging-fluentd
+    register: logging_fluentd_daemonset
+    until:
+    - logging_fluentd_daemonset.results.results[0].status.numberReady is defined
+    - logging_fluentd_daemonset.results.results[0].status.numberReady > 0
+    retries: 60
+    delay: 10
+    changed_when: false
+
+  #- name: debug node_exporter_daemonset
+   # debug: 
+    #  var: node_exporter_daemonset
+     # verbosity: 1
