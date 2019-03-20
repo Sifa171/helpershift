@@ -20,6 +20,6 @@ oc login -u $USERNAME $URL
 OAUTHKEY=$(oc export secret grafana-datasources -n openshift-monitoring -o json | jq -r '.data."prometheus.yaml"' | base64 --decode | jq -r '.datasources[].basicAuthPassword')
 sed -i.bak 's#basicAuthPassword":"#basicAuthPassword":"'"$OAUTHKEY"'#' grafana-template.yaml
 
-oc create -f -n openshift grafana-template.yaml.bak
+oc create -n openshift -f grafana-template.yaml.bak
 rm -f *.bak
 echo "Finish"
