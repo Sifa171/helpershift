@@ -22,7 +22,7 @@ dnf install jq
 
 ```
 chmod +x installTemplate.sh
-./install.sh $YOUR_OCP_USER $YOUR_OCP_MASTER_URL
+./installTemplate.sh $YOUR_OCP_USER $YOUR_OCP_MASTER_URL
 ```
 
 ## Dashboards
