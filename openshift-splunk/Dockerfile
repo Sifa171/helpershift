@@ -4,7 +4,5 @@ LABEL maintainer="Sebastian Dehn <sdehn@redhat.com>"
 
 RUN gem install -N fluent-plugin-secure-forward
 
-ADD fluent.conf /fluentd/etc/
-
 ENTRYPOINT ["/fluentd/entrypoint.sh"]
 CMD ["-h"]
