@@ -117,7 +117,8 @@ objects:
         serviceAccountName: grafana
         terminationGracePeriodSeconds: 30
         volumes:
-        - emptyDir: {}
+        - persistentVolumeClaim:
+            claimName: "grafana-storage"
           name: grafana-storage
         - name: grafana-datasources
           secret:
@@ -282,6 +283,16 @@ objects:
     labels:
       template: grafana
   type: Opaque
+- apiVersion: "v1"
+  kind: "PersistentVolumeClaim"
+  metadata:
+    name: "grafana-storage"
+  spec:
+    accessModes:
+      - "ReadWriteOnce"
+    resources:
+      requests:
+        storage: "5Gi"
 - apiVersion: v1
   data:
     k8s-resources-namespace.json: |-
