@@ -5,6 +5,7 @@
      - role: createServiceAccount
      - role: createRoleBinding
      - role: createCronJobs
+     - role: createRessourcesInOpenshift
      - role: cleanup
        when: cleanup == 'true'
   vars:
