@@ -5,6 +5,10 @@
       dest: "{{ playbook_dir }}/tmp/"
       flat: yes
     delegate_to: "{{ openshift_master_hostname }}"
+
+  - name: Include createNamespace task, because create_namespace is true
+    include: createNamespace.yaml
+    when: create_namespace == 'true'
   
   - name: Create namespace
     local_action: command {{ playbook_dir }}/scripts/namespace-setup.sh
