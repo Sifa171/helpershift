@@ -6,6 +6,8 @@
      - role: createRoleBinding
      - role: createCronJobs
      - role: createRessourcesInOpenshift
+       import_task: createNamespace.yaml
+       when: create_namespace == 'true'
      - role: cleanup
        when: cleanup == 'true'
   vars:
