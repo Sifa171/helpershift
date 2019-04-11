@@ -1,9 +1,9 @@
 [all:vars]
-company_short=
-namespace=
+company_short=sit
+namespace=sit-operations
 cleanup=true
-image_registry=registry.redhat.io
-openshift_master_hostname=
+image_registry=docker.repo.schwarz
+openshift_master_hostname=sdea-ocpma-s100.sys.schwarz
 
 
 [local]

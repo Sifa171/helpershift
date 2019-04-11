@@ -1,0 +1,10 @@
+apiVersion: authorization.openshift.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: sit-cron-runner
+roleRef:
+  name: cluster-admin 
+subjects:
+- kind: ServiceAccount
+  name: sit-cron-runner
+  namespace: "sit-operations"
