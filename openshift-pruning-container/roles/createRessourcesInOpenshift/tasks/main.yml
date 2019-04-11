@@ -7,7 +7,7 @@
     delegate_to: "{{ openshift_master_hostname }}"
 
   - name: Include createNamespace task, because create_namespace is true
-    include: createNamespace.yaml
+    import_tasks: createNamespace.yml
     when: create_namespace == 'true'
   
   - name: Create namespace
