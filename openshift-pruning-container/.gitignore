@@ -1,2 +1,2 @@
-playbooks/tmp/*
+playbooks/tmp
 ansible.log
