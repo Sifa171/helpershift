@@ -4,7 +4,7 @@
       src: /etc/origin/master/admin.kubeconfig
       dest: "{{ playbook_dir }}/tmp/"
       flat: yes
-    delegate_to: {{ openshift_master_hostname }}
+    delegate_to: "{{ openshift_master_hostname }}"
 
   - name: Create serviceAccount and roleBinding
     local_action: command {{ playbook_dir }}/scripts/misc-setup.sh 
