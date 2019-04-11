@@ -1,9 +1,18 @@
 [all:vars]
-company_short=sit
-namespace=sit-operations
+## REQUIRED the namespace in which all ressources will be created
+namespace=
+
+## if you already created the namespace set variable to false
+create_namespace=true
+
+## you wanna keep all files create by the playbook? Set to false
 cleanup=true
+
+## if you are using a registry proxy, then set it here. Default is registry.redhat.io
 image_registry=docker.repo.schwarz
-openshift_master_hostname=sdea-ocpma-s100.sys.schwarz
+
+## REQUIRED fqdn of one of your masters to fetch admin.kubeconfig 
+openshift_master_hostname=
 
 
 [local]

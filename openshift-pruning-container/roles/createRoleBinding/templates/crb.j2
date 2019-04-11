@@ -1,10 +1,10 @@
 apiVersion: authorization.openshift.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ COMPANY_SHORT }}-cron-runner
+  name: cron-runner
 roleRef:
   name: cluster-admin 
 subjects:
 - kind: ServiceAccount
-  name: {{ COMPANY_SHORT }}-cron-runner
+  name: cron-runner
   namespace: "{{ NAMESPACE }}"

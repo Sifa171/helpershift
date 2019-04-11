@@ -3,3 +3,8 @@
     file:
       path: "{{ playbook_dir }}/tmp"
       state: absent
+
+  - name: Cleanup namespace creation script
+    file:
+      path: "{{ playbook_dir }}/scripts/namespace-setup.sh"
+      state: absent

@@ -1,0 +1,7 @@
+---
+  - name: Create namespace creation script
+    template:
+      src: namespace-setup.sh.j2
+      dest: "{{ playbook_dir }}/scripts/namespace-setup.sh"
+      mode: 777
+    
