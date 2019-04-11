@@ -1,0 +1,16 @@
+---
+  - name: Fetch admin.kubeconfig from OpenShift Master
+    fetch:
+      src: /etc/origin/master/admin.kubeconfig
+      dest: "{{ playbook_dir }}/tmp/"
+      flat: yes
+    delegate_to: {{ openshift_master_hostname }}
+
+  - name: Execute script operations-setup.sh
+    local_action: command {{ playbook_dir }}/scripts/operations-setup.sh
+
+  # delete the admin.kubeconfig because of security reason (it's not nedded anymore)
+  - name: Delete admin.kubeconfig
+    file:
+      path: "{{ playbook_dir }}/tmp/admin.kubeconfig"
+      state: absent

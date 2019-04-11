@@ -1,0 +1,10 @@
+[all:vars]
+company_short=
+namespace=
+cleanup=true
+image_registry=registry.redhat.io
+openshift_master_hostname=
+
+
+[local]
+localhost ansible_connection=local

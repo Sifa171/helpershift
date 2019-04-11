@@ -1,0 +1,5 @@
+---
+  - name: Create tmp directory for YAML files
+    file:
+      path: "{{ playbook_dir }}/tmp"
+      state: directory

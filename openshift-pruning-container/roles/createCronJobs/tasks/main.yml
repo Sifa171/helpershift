@@ -1,0 +1,15 @@
+---
+  - name: Create Prune-Build Cronjob YAML
+    template:
+      src: prune-builds.cj.j2
+      dest: "{{ playbook_dir }}/tmp/prune-builds.cj.yml"
+
+  - name: Create Prune-Deployments Cronjob YAML
+    template:
+      src: prune-deployments.cj.j2
+      dest: "{{ playbook_dir }}/tmp/prune-deployments.cj.yml"
+
+  - name: Create Prune-Images Cronjob YAML
+    template:
+      src: prune-images.cj.j2
+      dest: "{{ playbook_dir }}/tmp/prune-images.cj.yml"

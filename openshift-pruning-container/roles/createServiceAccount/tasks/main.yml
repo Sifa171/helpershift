@@ -1,0 +1,5 @@
+---
+  - name: Create ServiceAccount YAML
+    template:
+      src: sa.j2
+      dest: "{{ playbook_dir }}/tmp/sa.yml"

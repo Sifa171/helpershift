@@ -1,0 +1,5 @@
+---
+  - name: Cleanup files and directories
+    file:
+      path: "{{ playbook_dir }}/tmp"
+      state: absent

@@ -1,0 +1,13 @@
+- hosts: localhost
+  gather_facts: False
+  roles:
+     - role: createDirectory
+     - role: createServiceAccount
+     - role: createRoleBinding
+     - role: createCronJobs
+     - role: cleanup
+       when: cleanup == 'true'
+  vars:
+        COMPANY_SHORT: "{{ company_short }}"
+        NAMESPACE: "{{ namespace }}"
+        IMAGE_REGISTRY: "{{ image_registry }}"

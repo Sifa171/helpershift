@@ -1,0 +1,5 @@
+---
+  - name: Create RoleBinding YAML
+    template:
+      src: crb.j2
+      dest: "{{ playbook_dir }}/tmp/crb.yml"
