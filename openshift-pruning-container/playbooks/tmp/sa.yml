@@ -1,5 +1,0 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: sit-cron-runner
-  namespace: "sit-operations"
