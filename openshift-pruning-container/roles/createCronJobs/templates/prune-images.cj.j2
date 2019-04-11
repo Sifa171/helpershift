@@ -6,7 +6,7 @@ metadata:
 spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 1
-  schedule: "45 * * * *"
+  schedule: "{{ IMAGES_SCHEDULE }}"
   jobTemplate:
     spec:
       template:
@@ -19,7 +19,7 @@ spec:
             - -c
             - |
               #/bin/bash
-              oc adm prune images --keep-tag-revisions=3 --keep-younger-than=60m --confirm
+              oc adm prune images --keep-tag-revisions={{ IMAGES_KEEP_TAG_REVISIONS }} --keep-younger-than={{ IMAGES_KEEP_YOUNGER_THAN }} --confirm
               oc adm prune images --prune-over-size-limit --confirm
             imagePullPolicy: IfNotPresent
             env:

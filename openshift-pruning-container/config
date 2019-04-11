@@ -2,18 +2,35 @@
 ## REQUIRED the namespace in which all ressources will be created
 namespace=
 
-## if you already created the namespace set variable to false
-create_namespace=true
+## if you want to create a new namespace for pruning jobs set variable to false
+create_namespace=false
 
 ## you wanna keep all files create by the playbook? Set to false
 cleanup=true
 
 ## if you are using a registry proxy, then set it here. Default is registry.redhat.io
-image_registry=docker.repo.schwarz
+image_registry=registry.redhat.io
 
 ## REQUIRED fqdn of one of your masters to fetch admin.kubeconfig 
 openshift_master_hostname=
 
+
+## REQUIRED Section for Cronjobs
+### prune builds
+builds_keep_complete=5
+builds_keep_failed=1
+builds_keep_younger_than=60m
+builds_schedule="15 * * * *"
+
+
+### prune deployments
+deployments_keep_younger_than=60m
+deployments_schedule="30 * * * *"
+
+### prune images
+images_keep_younger_than=60m
+images_keep_tag_revisions=3
+images_schedule="45 * * * *"
 
 [local]
 localhost ansible_connection=local

@@ -11,4 +11,12 @@
   vars:
         NAMESPACE: "{{ namespace }}"
         IMAGE_REGISTRY: "{{ image_registry }}"
-        
+        BUILDS_KEEP_COMPLETE: "{{ builds_keep_complete }}"
+        BUILDS_KEEP_FAILED: "{{ builds_keep_failed }}"
+        BUILDS_KEEP_YOUNGER_THAN: "{{ builds_keep_younger_than }}"
+        BUILDS_SCHEDULE: "{{ builds_schedule}}"
+        DEPLOYMENTS_KEEP_YOUNGER_THAN: "{{ deployments_keep_younger_than }}"
+        DEPLOYMENTS_SCHEDULE: "{{ deployments_schedule }}"
+        IMAGES_KEEP_TAG_REVISIONS: "{{ images_keep_tag_revisions }}"
+        IMAGES_KEEP_YOUNGER_THAN: "{{images_keep_younger_than }}"
+        IMAGES_SCHEDULE: "{{images_schedule}}"

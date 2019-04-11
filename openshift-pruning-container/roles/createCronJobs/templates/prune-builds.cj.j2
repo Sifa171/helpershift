@@ -6,7 +6,7 @@ metadata:
 spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 1
-  schedule: "15 * * * *"
+  schedule: "{{ BUILDS_SCHEDULE }}"
   jobTemplate:
     spec:
       template:
@@ -19,7 +19,7 @@ spec:
             - -c
             - |
               #/bin/bash
-              oc adm prune builds --orphans --keep-complete=5 --keep-failed=1 --keep-younger-than=60m --confirm
+              oc adm prune builds --orphans --keep-complete={{ BUILDS_KEEP_COMPLETE }} --keep-failed={{ BUILDS_KEEP_FAILED }} --keep-younger-than={{ BUILDS_KEEP_YOUNGER_THAN }} --confirm
             imagePullPolicy: IfNotPresent
             env:
             - name: HOME
