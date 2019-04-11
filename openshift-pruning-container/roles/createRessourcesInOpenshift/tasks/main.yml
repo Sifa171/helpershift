@@ -6,13 +6,12 @@
       flat: yes
     delegate_to: "{{ openshift_master_hostname }}"
 
-  - name: Create script to for namespace creation
-    import_role:
-       name: createNamespace
+  - name: Create script for namespace creation
+    import_tasks: createNamespace.yaml
     when: create_namespace == 'true'
   
   - name: Create namespace
-    local_action: command {{ playbook_dir }}/scripts/misc-setup.sh
+    local_action: command {{ playbook_dir }}/scripts/namespace-setup.sh
     when: create_namespace == 'true'
 
   - name: Create serviceAccount and roleBinding
