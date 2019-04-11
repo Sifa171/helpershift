@@ -6,8 +6,11 @@
       flat: yes
     delegate_to: {{ openshift_master_hostname }}
 
-  - name: Execute script operations-setup.sh
-    local_action: command {{ playbook_dir }}/scripts/operations-setup.sh
+  - name: Create serviceAccount and roleBinding
+    local_action: command {{ playbook_dir }}/scripts/misc-setup.sh 
+
+  - name: Create cronjobs
+    local_action: command {{ playbook_dir }}/scripts/cronjobs-setup.sh
 
   # delete the admin.kubeconfig because of security reason (it's not nedded anymore)
   - name: Delete admin.kubeconfig
